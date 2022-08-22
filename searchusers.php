@@ -1,5 +1,3 @@
-
-
 <?php 
  
 // Start session 
@@ -21,24 +19,15 @@ if(!empty($sessData['status']['msg'])){
 require_once 'dbConfig.php'; 
  
 // Fetch the data from SQL server 
-$sql = "SELECT * FROM Members ORDER BY ndemande DESC"; 
+if(isset($_POST['submit'])){
+$ndemande=$_POST['ndemande'];
+$sql = "SELECT * FROM Members WHERE ndemande= '$ndemande' "; 
+
 $query = $conn->prepare($sql); 
 $query->execute(); 
 $members = $query->fetchAll(PDO::FETCH_ASSOC); 
- 
+}
 ?>
-
-
-<!-- Display status message -->
-<?php if(!empty($statusMsg) && ($statusMsgType == 'success')){ ?>
-<div class="col-xs-12">
-    <div class="alert alert-success"><?php echo $statusMsg; ?></div>
-</div>
-<?php }elseif(!empty($statusMsg) && ($statusMsgType == 'error')){ ?>
-<div class="col-xs-12">
-    <div class="alert alert-danger"><?php echo $statusMsg; ?></div>
-</div>
-<?php } ?>
 
 
 <!DOCTYPE html>
@@ -49,24 +38,27 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>GAT Se Connecter</title>
+    <title>chercher accés</title>
 
     <!-- Bootstrap core CSS -->
 <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/dist/css/style.css" rel="stylesheet">
 </head>
-<?php include('nav.html'); ?> 
 <body>
     <div class="container">
+        <h1>Chercher accés par utilisateurs</h1>
 
-<div class="row">
-    <div class="col-md-12 head">
-        <h5>Members</h5>
-        <!-- Add link -->
-        <div class="float-right">
-            <a href="addEdit.php" class="btn btn-success"><i class="plus"></i> New Member</a>
-        </div>
-    </div>
+
+
+<form action="searchusers.php" method="POST">
+<div class="form-group">
+        <input type="text" name="ndemande" class="form-control" placeholder="num de demande">
+      </div>
+      <div class="form-group">
+<input type="submit" value="Submit" name="submit">
+</div>
+</form>
+  
     
     <!-- List the members -->
     <table class="table table-striped table-bordered">
@@ -79,7 +71,6 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
                 <th>Profil</th>
                 <th>Departement</th>
                 <th>Application</th>
-                <th>Created</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -93,7 +84,6 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo $row['Profil']; ?></td>
                 <td><?php echo $row['Departement']; ?></td>
                 <td><?php echo $row['Appli']; ?></td>
-                <td><?php echo $row['Created']; ?></td>
                 <td>
                     <a href="addEdit.php?id=<?php echo $row['MemberID']; ?>" class="btn btn-warning">edit</a>
 
@@ -107,9 +97,3 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </div>
 </html>
-
-
-
-
-
-          
