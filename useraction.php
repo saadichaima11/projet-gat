@@ -18,7 +18,9 @@ if(isset($_POST['userSubmit'])){
     $LastName = trim(strip_tags($_POST['LastName'])); 
     $Profil = trim(strip_tags($_POST['Profil'])); 
     $Departement = trim(strip_tags($_POST['departement'])); 
-    $Application = trim(strip_tags($_POST['Appli'])); 
+    $apps=$_POST['apps'];
+  
+   
 
      
     $id_str = ''; 
@@ -40,7 +42,7 @@ if(isset($_POST['userSubmit'])){
     if(empty($Departement)){ 
         $errorMsg .= '<p>Please enter a departement.</p>'; 
     } 
-    if(empty($Application)){ 
+    if(empty($apps)){ 
         $errorMsg .= '<p>Please enter an application.</p>'; 
     } 
      
@@ -51,7 +53,8 @@ if(isset($_POST['userSubmit'])){
         'LastName' => $LastName, 
         'Profil' => $Profil, 
         'departement' => $Departement,
-        'Appli' => $Application 
+        'appli'=>$apps,
+    
     ); 
      
     // Store the submitted field values in the session 
@@ -63,7 +66,7 @@ if(isset($_POST['userSubmit'])){
             // Update data in SQL server 
             $sql = "UPDATE Members SET ndemande= ?, FirstName = ?, LastName = ?, Profil = ?, departement = ?, Appli= ?  WHERE MemberID = ?";   
             $query = $conn->prepare($sql);   
-            $update = $query->execute(array($ndemande,$FirstName, $LastName, $Profil, $Departement, $Application,$MemberID)); 
+            $update = $query->execute(array($ndemande,$FirstName, $LastName, $Profil, $Departement, $apps,$MemberID)); 
              
             if($update){ 
                 $sessData['status']['type'] = 'success'; 
@@ -79,19 +82,16 @@ if(isset($_POST['userSubmit'])){
                 $redirectURL = 'addEdit.php'.$id_str; 
             } 
         }else{ 
+            foreach ($apps as $key=> $value) {
+                echo "$value <br>";
             // Insert data in SQL server 
-            $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ,  Created) VALUES (?,?,?,?,?,?,?)";   
-            $params = array( 
-                &$ndemande, 
-                &$FirstName, 
-                &$LastName, 
-                &$Profil, 
-                &$Departement,
-                &$Application, 
-                date("Y-m-d H:i:s") 
-            );   
+            $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ) 
+            VALUES ('$ndemande', '$FirstName', '$LastName', '$Profil', '$Departement','$value' )";   
+           
+          
             $query = $conn->prepare($sql); 
-            $insert = $query->execute($params);   
+            $insert = $query->execute($params);  
+        } 
              
             if($insert){ 
                 //$MemberID = $conn->lastInsertId(); 

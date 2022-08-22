@@ -31,8 +31,35 @@ $userData = !empty($sessData['userData'])?$sessData['userData']:$memberData;
 unset($_SESSION['sessData']['userData']); 
  
 $actionLabel = !empty($_GET['id'])?'Edit':'Add'; 
+
+ 
+
  
 ?>
+<?php 
+ 
+ // Start session 
+ if(!session_id()){ 
+     session_start(); 
+ } 
+  
+ // Retrieve session data 
+ $sessData = !empty($_SESSION['sessData'])?$_SESSION['sessData']:''; 
+  
+ // Get status message from session 
+ if(!empty($sessData['status']['msg'])){ 
+     $statusMsg = $sessData['status']['msg']; 
+     $statusMsgType = $sessData['status']['type']; 
+     unset($_SESSION['sessData']['status']); 
+ } 
+  
+ // Include database configuration file 
+ require_once 'dbConfig.php'; 
+ $sql1 = "SELECT * FROM appli ORDER BY idapp DESC"; 
+ $query = $conn->prepare($sql1); 
+ $query->execute(); 
+ $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
+ ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -67,6 +94,9 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
         <h2><?php echo $actionLabel; ?> Member</h2>
     </div>
     <div class="col-md-6">
+   
+   
+   
          <form method="post" action="userAction.php">
          <div class="form-group">
                 <label>Numero de demande</label>
@@ -89,14 +119,36 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
                 <label>Departement</label>
                 <input type="text" class="form-control" name="departement" placeholder="entrez votre departement" value="<?php echo !empty($userData['departement'])?$userData['departement']:''; ?>" required="">
             </div>
+            
+
             <div class="form-group">
-                <label>Application</label>
-                <input type="text" class="form-control" name="Appli" placeholder="entrez votre application " value="<?php echo !empty($userData['Appli'])?$userData['Appli']:''; ?>" required="">
+                <label>Application</label></br>
+                <?php
+        if(!empty($appli1)){ $count = 0; foreach($appli1 as $row){ $count++; ?> 
+                <input type="checkbox" name="apps[]"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>
+
+          <?php }  ?>
+          <?php }?>
             </div>
             
             <a href="index.php" class="btn btn-secondary">Back</a>
             <input type="hidden" name="MemberID" value="<?php echo !empty($userData['MemberID'])?$userData['MemberID']:''; ?>">
             <input type="submit" name="userSubmit" class="btn btn-success" value="Submit">
         </form>
+      
+
+
+
+
     </div>
 </div>
+<?php
+if(isset($_POST['usersubmit']))
+{if (!empty($_POST['apps'])){
+foreach($_POST['apps'] as $valeur)
+{
+echo $valeur ."<br>";
+}
+}
+}
+?>
