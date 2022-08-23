@@ -1,6 +1,5 @@
 <?php
 
-
 require_once 'dbConfig.php'; 
 $sql1 = "SELECT * FROM appli ORDER BY idapp DESC"; 
 $query = $conn->prepare($sql1); 
@@ -15,7 +14,7 @@ $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
   foreach ($namemod as $value) {
-    echo "$value <br>";
+    
   
 
   $sql2 =" INSERT INTO module (nommod,nomapp) VALUES ('$value' ,'$nomapp')";
@@ -25,7 +24,6 @@ $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
 }
   
  }
-
 
 ?>
 
@@ -42,13 +40,13 @@ $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
-<?php include('nav.html'); ?> 
+<?php include('navv.php'); ?> 
 <body>
-  <div class="container">
+<div class="container">
 <form action="addmod.php" method="post">
     <div class="col-lg-3 col-mg-12 top-form">
     <div class="form-group">
-                <h1>Application</h1></br>
+                <h1>Ajouter un module </h1></br>
                 <?php
         if(!empty($appli1)){ $count = 0; foreach($appli1 as $row){ $count++; ?> 
                 <input type="radio" name="app"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>

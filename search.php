@@ -39,6 +39,9 @@
                         <th>Nom</th>
                         <th>Application</th>
                         <th>Profil</th>
+                        <th>debut</th>
+                        <th>fin</th>
+
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -53,8 +56,11 @@
                             <td> ' . $data['LastName'] . ' </td>
                             <td>' . $data['FirstName']. '</td>
                             <td> ' . $data['Appli']. '   </td>
+                            
                            
                             <td> ' . $data['Profil']. '   </td>
+                            <td> ' . $data['debut']. '   </td>
+                            <td> ' . $data['fin']. '   </td>
                             
                             <td>
                             <a href="addEdit.php?id='.$data['MemberID'].'" class="btn btn-warning">edit</a>

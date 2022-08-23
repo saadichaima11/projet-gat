@@ -59,6 +59,8 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
  $query = $conn->prepare($sql1); 
  $query->execute(); 
  $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
  ?>
 <!DOCTYPE html>
 <html>
@@ -68,15 +70,27 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>GAT Se Connecter</title>
+    <title>ajouter user</title>
 
     <!-- Bootstrap core CSS -->
-<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="./assets/dist/css/style.css" rel="stylesheet">
+<link href="./csss/bootstrap.min.css" rel="stylesheet">
+<link href="./csss/style.css" rel="stylesheet">
+<script src ="js/main.js" ></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/icomoon/style.css">
+
+
+
 </head>
-<?php include('nav.html'); ?> 
+<?php include('navv.php'); ?> 
 <body>
-<div class="container">
+<div class="content">
+    
+    <div class="container">
+      <div class="row align-items-stretch no-gutters contact-wrap">
+        <div class="col-md-12">
+          <div class="form h-100">
+
        
 
 <!-- Display status message -->
@@ -90,49 +104,68 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
 </div>
 <?php } ?>
 
-<div class="row">
+
     <div class="col-md-12">
-        <h2><?php echo $actionLabel; ?> Member</h2>
+        <h1 style="margin-left:-30px"> Ajouter utilisateur</h1>
+        <br>
     </div>
-    <div class="col-md-6">
+  
    
    
    
-         <form method="post" action="userAction.php">
-         <div class="form-group">
-                <label>Numero de demande</label>
+         <form method="post" action="userAction.php"  class="mb-5" id="contactForm" name="contactForm">
+         <div class="row">
+                <label style="color:black;margin-left:11px"> <strong>  Numero de demande</strong></label>
                 <input type="text" class="form-control" name="ndemande" placeholder="entrez votre num de demande " value="<?php echo !empty($userData['ndemande'])?$userData['ndemande']:''; ?>" required="">
-            </div> 
+            </div>
+            <br> 
          
-         <div class="form-group">
-                <label>Prénom</label>
+            <div class="row">
+                
+            <div class="col-md-6 form-group mb-3"> 
+                <label  style="color:black" ><strong>Prénom</strong></label>
                 <input type="text" class="form-control" name="FirstName" placeholder="Enter your first name" value="<?php echo !empty($userData['FirstName'])?$userData['FirstName']:''; ?>" required="">
             </div>
-            <div class="form-group">
-                <label>Nom</label>
+            
+            <div class="col-md-6 form-group mb-3">
+                <label  style="color:black" ><strong>Nom</strong></label>
                 <input type="text" class="form-control" name="LastName" placeholder="Enter your last name" value="<?php echo !empty($userData['LastName'])?$userData['LastName']:''; ?>" required="">
             </div>
-            <div class="form-group">
-                <label>Profil</label>
+</div>     
+ <div class="row">
+ <div class="col-md-6 form-group mb-3"> 
+                <label  style="color:black" ><strong>Profil</strong></label>
                 <input type="text" class="form-control" name="Profil" placeholder="entrez votre Profil" value="<?php echo !empty($userData['Profil'])?$userData['Profil']:''; ?>" required="">
             </div>
-            <div class="form-group">
-                <label>Departement</label>
+            <div class="col-md-6 form-group mb-3"> 
+                <label  style="color:black" ><strong>Departement</strong></label>
                 <input type="text" class="form-control" name="departement" placeholder="entrez votre departement" value="<?php echo !empty($userData['departement'])?$userData['departement']:''; ?>" required="">
             </div>
-            
+</div>
+<div class="row">
 
+<div class="col-md-6 form-group mb-3"> 
+                <label style="color:black" ><strong>Date debut</strong></label>
+                <input type="date" class="form-control" name="debut"  value="<?php echo !empty($userData['debut'])?$userData['debut']:''; ?>" required="">
+            </div>
+            <div class="col-md-6 form-group mb-3"> 
+                <label  style="color:black" ><strong>Date fin</strong></label>
+                <input type="date" class="form-control" name="fin"  value="<?php echo !empty($userData['fin'])?$userData['fin']:''; ?>" required="">
+            </div>
+</div>
             <div class="form-group">
-                <label>Application</label></br>
+                <label style="color:black" ><strong>Application</strong></label></br>
                 <?php
         if(!empty($appli1)){ $count = 0; foreach($appli1 as $row){ $count++; ?> 
-                <input type="checkbox" name="apps[]"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>
+                <input type="radio" name="apps[]"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>
 
           <?php }  ?>
           <?php }?>
+
+
             </div>
+           
             
-            <a href="index.php" class="btn btn-secondary">Back</a>
             <input type="hidden" name="MemberID" value="<?php echo !empty($userData['MemberID'])?$userData['MemberID']:''; ?>">
             <input type="submit" name="userSubmit" class="btn btn-success" value="Submit">
         </form>

@@ -54,6 +54,8 @@ if(isset($_POST['userSubmit'])){
         'Profil' => $Profil, 
         'departement' => $Departement,
         'appli'=>$apps,
+        'debut'=>$debut,
+        'fin'=>$fin,
     
     ); 
      
@@ -64,7 +66,7 @@ if(isset($_POST['userSubmit'])){
     if(empty($errorMsg)){ 
         if(!empty($MemberID)){ 
             // Update data in SQL server 
-            $sql = "UPDATE Members SET ndemande= ?, FirstName = ?, LastName = ?, Profil = ?, departement = ?, Appli= ?  WHERE MemberID = ?";   
+            $sql = "UPDATE Members SET ndemande= ?, FirstName = ?, LastName = ?, Profil = ?, departement = ?, Appli= ? ,debut=?,fin=? WHERE MemberID = ?";   
             $query = $conn->prepare($sql);   
             $update = $query->execute(array($ndemande,$FirstName, $LastName, $Profil, $Departement, $apps,$MemberID)); 
              
@@ -85,8 +87,8 @@ if(isset($_POST['userSubmit'])){
             foreach ($apps as $key=> $value) {
                 echo "$value <br>";
             // Insert data in SQL server 
-            $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ) 
-            VALUES ('$ndemande', '$FirstName', '$LastName', '$Profil', '$Departement','$value' )";   
+            $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ,debut,fin) 
+            VALUES ('$ndemande', '$FirstName', '$LastName', '$Profil', '$Departement','$value','$debut','$fin' )";   
            
           
             $query = $conn->prepare($sql); 

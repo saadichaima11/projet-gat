@@ -55,7 +55,7 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
 <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/dist/css/style.css" rel="stylesheet">
 </head>
-<?php include('nav.html'); ?> 
+<?php include('navv.php'); ?> 
 <body>
     <div class="container">
 
@@ -79,7 +79,8 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
                 <th>Profil</th>
                 <th>Departement</th>
                 <th>Application</th>
-                <th>Created</th>
+                <th>debut</th>
+                <th>fin</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -93,7 +94,8 @@ $members = $query->fetchAll(PDO::FETCH_ASSOC);
                 <td><?php echo $row['Profil']; ?></td>
                 <td><?php echo $row['Departement']; ?></td>
                 <td><?php echo $row['Appli']; ?></td>
-                <td><?php echo $row['Created']; ?></td>
+                <td><?php echo $row['debut']; ?></td>
+                <td><?php echo $row['fin']; ?></td>
                 <td>
                     <a href="addEdit.php?id=<?php echo $row['MemberID']; ?>" class="btn btn-warning">edit</a>
 

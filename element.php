@@ -28,6 +28,8 @@ if (isset($_GET['MemberID'])) {
                 <th>FirstName</th>
                 <th>Profil</th>
                 <th>Appli</th>
+                <th>Debut</th>
+                <th>fin</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +38,8 @@ if (isset($_GET['MemberID'])) {
                 <td><?php echo $result['FirstName']; ?></td>
                 <td><?php echo $result['Profil']; ?></td>
                 <td><?php echo $result['Appli']; ?></td>
+                <td><?php echo $result['debut']; ?></td>
+                <td><?php echo $result['fin']; ?></td>
             </tr>
         </tbody>
     </table>
@@ -55,6 +59,8 @@ if (isset($_GET['MemberID'])) {
                 <th>FirstName</th>
                 <th>Profil</th>
                 <th>Appli</th>
+                <th>Debut</th>
+                <th>fin</th>
             </tr>
         </thead>
         <tbody>
@@ -69,6 +75,8 @@ if (isset($_GET['MemberID'])) {
                     <td><?php echo $result['FirstName']; ?></td>
                     <td><?php echo $result['Profil']; ?></td>
                     <td><?php echo $result['Appli']; ?></td>
+                    <td><?php echo $result['debut']; ?></td>
+                <td><?php echo $result['fin']; ?></td>
                 </tr>
             <?php
             }
@@ -87,6 +95,8 @@ if (isset($_GET['MemberID'])) {
                 <th>FirstName</th>
                 <th>Profil</th>
                 <th>Appli</th>
+                <th>Debut</th>
+                <th>fin</th>
             </tr>
         </thead>
         <tbody>
@@ -101,6 +111,8 @@ if (isset($_GET['MemberID'])) {
                     <td><?php echo $result['FirstName']; ?></td>
                     <td><?php echo $result['Profil']; ?></td>
                     <td><?php echo $result['Appli']; ?></td>
+                    <td><?php echo $result['debut']; ?></td>
+                <td><?php echo $result['fin']; ?></td>
                 </tr>
             <?php
             }
