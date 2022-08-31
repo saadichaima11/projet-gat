@@ -5,8 +5,11 @@
 </head>
 
   <?php include('navv.php')?>
+  <?php include('loading.php')?>
+
   <div class="first-hero">
-    <img class="hero-profile-img" src="https://img.freepik.com/vecteurs-premium/homme-femme-dessin-anime-minuscule-se-serrant-main-illustration-plate_74855-18773.jpg?w=900" alt="">
+    <a href="addapp.php">
+    <img class="hero-profile-img" src="https://img.freepik.com/free-vector/add-user-concept-illustration_114360-458.jpg?w=740&t=st=1661516436~exp=1661517036~hmac=f7f899b8be0f64dea329b623b1e164048e3ce148d26eb19e26973f2a2f1748eb" alt="">
     <div class="hero-description-bk"></div>
     <div class="hero-logo">
       <img src="x.png" alt="">
@@ -16,14 +19,13 @@
     </div>
     <div  class="hero-date">
     </div>
-    <div class="hero-btn">
-      <a href="addapp.php">Ajouter Application</a>
-    </div>
-  </div>
+    
+  </div></a>
 
 
   <div class="first-hero">
-    <img class="hero-profile-img" src="https://img.freepik.com/vecteurs-premium/homme-femme-dessin-anime-minuscule-se-serrant-main-illustration-plate_74855-18773.jpg?w=900" alt="">
+  <a href="addmod.php">
+    <img class="hero-profile-img" src="https://img.freepik.com/free-vector/add-notes-concept-illustration_114360-3376.jpg?w=740&t=st=1661516506~exp=1661517106~hmac=34720e92390c0ef6326abedbbfda33fde450ad0625720bc0167560721b0e1c05" alt="">
     <div class="hero-description-bkk"></div>
     <div class="hero-logo">
       <img src="x.png" alt="">
@@ -33,8 +35,6 @@
     </div>
     <div  class="hero-date">
     </div>
-    <div class="hero-btn">
-      <a href="addmod.php">Ajouter Module</a>
-    </div>
-  </div>
+    
+  </div></a>
   

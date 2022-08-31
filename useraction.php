@@ -1,3 +1,5 @@
+
+
 <?php 
 // Start session 
 if(!session_id()){ 
@@ -9,7 +11,10 @@ require_once 'dbConfig.php';
  
 // Set default redirect url 
 $redirectURL = 'index.php'; 
- 
+if(isset($_POST['modSubmit'])){
+
+    $module=$_POST['module']; 
+ }
 if(isset($_POST['userSubmit'])){ 
     // Get form fields value 
     $MemberID = $_POST['MemberID']; 
@@ -17,8 +22,12 @@ if(isset($_POST['userSubmit'])){
     $FirstName = trim(strip_tags($_POST['FirstName'])); 
     $LastName = trim(strip_tags($_POST['LastName'])); 
     $Profil = trim(strip_tags($_POST['Profil'])); 
-    $Departement = trim(strip_tags($_POST['departement'])); 
+    $Departement = trim(strip_tags($_POST['departement']));
+    $debut= trim(strip_tags($_POST['debut']));
+    $fin=trim(strip_tags($_POST['fin']));
     $apps=$_POST['apps'];
+    $module=$_POST['module'];
+ 
   
    
 
@@ -45,7 +54,9 @@ if(isset($_POST['userSubmit'])){
     if(empty($apps)){ 
         $errorMsg .= '<p>Please enter an application.</p>'; 
     } 
-     
+    if(empty($module)){ 
+        $errorMsg .= '<p>Please enter a menu.</p>'; 
+    }
     // Submitted form data 
     $userData = array( 
         'ndemande' => $ndemande, 
@@ -56,6 +67,7 @@ if(isset($_POST['userSubmit'])){
         'appli'=>$apps,
         'debut'=>$debut,
         'fin'=>$fin,
+        'module'=>$module,
     
     ); 
      
@@ -66,10 +78,12 @@ if(isset($_POST['userSubmit'])){
     if(empty($errorMsg)){ 
         if(!empty($MemberID)){ 
             // Update data in SQL server 
-            $sql = "UPDATE Members SET ndemande= ?, FirstName = ?, LastName = ?, Profil = ?, departement = ?, Appli= ? ,debut=?,fin=? WHERE MemberID = ?";   
+       
+            foreach ($module as $key=> $values){
+            $sql = "UPDATE Members SET ndemande= ?, FirstName = ?, LastName = ?, Profil = ?, departement = ?, Appli= ? ,debut=?,fin=?,module=? WHERE MemberID = ?";   
             $query = $conn->prepare($sql);   
-            $update = $query->execute(array($ndemande,$FirstName, $LastName, $Profil, $Departement, $apps,$MemberID)); 
-             
+            $update = $query->execute(array($ndemande,$FirstName, $LastName, $Profil, $Departement, $apps,$debut,$fin,$values,$MemberID)); 
+                       
             if($update){ 
                 $sessData['status']['type'] = 'success'; 
                 $sessData['status']['msg'] = 'Member data has been updated successfully.'; 
@@ -83,16 +97,21 @@ if(isset($_POST['userSubmit'])){
                 // Set redirect url 
                 $redirectURL = 'addEdit.php'.$id_str; 
             } 
-        }else{ 
-            foreach ($apps as $key=> $value) {
-                echo "$value <br>";
+        }}else{ 
+           
+                foreach ($module as $key=> $values){
+               
+            
             // Insert data in SQL server 
-            $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ,debut,fin) 
-            VALUES ('$ndemande', '$FirstName', '$LastName', '$Profil', '$Departement','$value','$debut','$fin' )";   
+                 $sql = "INSERT INTO Members (ndemande,FirstName, LastName, Profil, departement,Appli ,debut,fin,module) 
+              VALUES ('$ndemande', '$FirstName', '$LastName', '$Profil', '$Departement','$apps','$debut','$fin','$values')";   
            
           
             $query = $conn->prepare($sql); 
-            $insert = $query->execute($params);  
+            $query->execute(); 
+            $insert =  $update = $query->execute($params);
+
+            
         } 
              
             if($insert){ 

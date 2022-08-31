@@ -77,7 +77,7 @@ if(isset($_POST["apps"])){
           <?php }  ?>
           <?php }?>
             </div>
-<input type="submit" value="Submit" name="submit">
+<input type="submit" class="btn btn-success" value="Submit" name="submit">
 
 </div>
 </div>

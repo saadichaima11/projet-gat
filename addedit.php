@@ -52,7 +52,6 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
      $statusMsgType = $sessData['status']['type']; 
      unset($_SESSION['sessData']['status']); 
  } 
-  
  // Include database configuration file 
  require_once 'dbConfig.php'; 
  $sql1 = "SELECT * FROM appli ORDER BY idapp DESC"; 
@@ -61,7 +60,15 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
  $appli1 = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
+ $sql2= "SELECT * FROM module "; 
+ $query2 = $conn->prepare($sql2); 
+ $query2->execute(); 
+ $appli2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+
  ?>
+
+
+ 
 <!DOCTYPE html>
 <html>
    <head>
@@ -120,7 +127,7 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
             </div>
             <br> 
          
-            <div class="row">
+   <div class="row">
                 
             <div class="col-md-6 form-group mb-3"> 
                 <label  style="color:black" ><strong>Prénom</strong></label>
@@ -145,6 +152,7 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
 <div class="row">
 
 <div class="col-md-6 form-group mb-3"> 
+
                 <label style="color:black" ><strong>Date debut</strong></label>
                 <input type="date" class="form-control" name="debut"  value="<?php echo !empty($userData['debut'])?$userData['debut']:''; ?>" required="">
             </div>
@@ -153,21 +161,40 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
                 <input type="date" class="form-control" name="fin"  value="<?php echo !empty($userData['fin'])?$userData['fin']:''; ?>" required="">
             </div>
 </div>
-            <div class="form-group">
+<div class="row">
+<div class="col-md-6 form-group mb-3">
                 <label style="color:black" ><strong>Application</strong></label></br>
                 <?php
         if(!empty($appli1)){ $count = 0; foreach($appli1 as $row){ $count++; ?> 
-                <input type="radio" name="apps[]"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>
+                <input type="radio" name="apps"  value="<?php echo $row['nomapp']; ?>" /><?php echo $row['nomapp']; ?><br/>
 
           <?php }  ?>
           <?php }?>
+          </div>
+          <div class="col-md-6 form-group mb-3">
+          <label style="color:black" ><strong>Module</strong></label></br>
+          <?php
+        if(!empty($appli1)){ $count = 0; foreach($appli2 as $row){ $count++; ?> 
+                <input type="checkbox" name="module[]"  value="<?php echo $row['nommod']; ?>" /><?php echo $row['nommod']; ?><br/>
 
-
-            </div>
+          <?php }  ?>
+          <?php }?>
+          </div>
            
-            
+        <div class="row">
             <input type="hidden" name="MemberID" value="<?php echo !empty($userData['MemberID'])?$userData['MemberID']:''; ?>">
             <input type="submit" name="userSubmit" class="btn btn-success" value="Submit">
+            <input type="submit" name="modsubmit" class="btn btn-success" value="module" >
+        </div>
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+ 
+
+            </div>
+
+ 
+  </div>
         </form>
       
 
@@ -176,6 +203,8 @@ $actionLabel = !empty($_GET['id'])?'Edit':'Add';
 
     </div>
 </div>
+
+
 <?php
 if(isset($_POST['usersubmit']))
 {if (!empty($_POST['apps'])){
@@ -183,6 +212,6 @@ foreach($_POST['apps'] as $valeur)
 {
 echo $valeur ."<br>";
 }
-}
-}
+ }
+  }
 ?>
